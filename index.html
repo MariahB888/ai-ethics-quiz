@@ -1,121 +1,62 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("tree-container");
+    let currentLevel = 0;
+    let path = [];
 
-public class AIQuizTreeDiagram {
-    private static JFrame frame;
-    private static JPanel panel;
-    private static JScrollPane scrollPane;
-    private static List<JLabel> questionLabels = new ArrayList<>();
-    private static List<JButton> buttons = new ArrayList<>();
-    private static JPanel treePanel;
-    private static JButton restartButton;
-    private static int yOffset = 20;
-    
-    public static void main(String[] args) {
-        frame = new JFrame("AI Ethics Decision Tree");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 600);
+    const questions = {
+        "start": {
+            text: "Should AI be allowed to make medical decisions?",
+            options: ["Yes", "No", "Depends"]
+        },
+        "Yes": {
+            text: "Should AI replace doctors?",
+            options: ["Yes, it's more accurate", "No, doctors are needed", "Only for diagnosis"]
+        },
+        "No": {
+            text: "Should AI assist in medical decisions?",
+            options: ["Yes", "No"]
+        },
+        "Depends": {
+            text: "What factors should decide?",
+            options: ["Ethical concerns", "Cost effectiveness", "Patient choice"]
+        }
+    };
+
+    function renderQuestion(questionKey) {
+        const questionData = questions[questionKey];
+        if (!questionData) return;
         
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBackground(new Color(30, 60, 114));
+        const questionDiv = document.createElement("div");
+        questionDiv.classList.add("question");
+        questionDiv.style.marginLeft = `${currentLevel * 40}px`;
         
-        treePanel = new JPanel(null); 
-        treePanel.setBackground(new Color(240, 248, 255));
+        const questionText = document.createElement("p");
+        questionText.textContent = questionData.text;
+        questionDiv.appendChild(questionText);
         
-        scrollPane = new JScrollPane(treePanel);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        questionData.options.forEach(option => {
+            const button = document.createElement("button");
+            button.textContent = option;
+            button.onclick = function () {
+                path.push(option);
+                currentLevel++;
+                renderQuestion(option);
+            };
+            questionDiv.appendChild(button);
+        });
         
-        panel.add(scrollPane, BorderLayout.CENTER);
-        frame.add(panel);
-        frame.setVisible(true);
-        
-        addQuestion("Start", "Should AI be allowed to make medical decisions?");
+        container.appendChild(questionDiv);
+    }
+
+    function restartQuiz() {
+        container.innerHTML = "";
+        currentLevel = 0;
+        path = [];
+        renderQuestion("start");
     }
     
-    private static void addQuestion(String parentText, String questionText) {
-        JLabel questionLabel = new JLabel(questionText);
-        questionLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        questionLabel.setBounds(50, yOffset, 600, 30);
-        treePanel.add(questionLabel);
-        questionLabels.add(questionLabel);
-        
-        String[] options;
-        if (questionText.equals("Should AI be allowed to make medical decisions?")) {
-            options = new String[]{"Yes", "No", "Depends"};
-        } else if (questionText.equals("Should AI replace doctors?")) {
-            options = new String[]{"Yes, it's more accurate", "No, doctors are needed", "Only for diagnosis"};
-        } else {
-            options = new String[]{"End Path"};
-        }
-        
-        int buttonX = 50;
-        for (String option : options) {
-            JButton button = new JButton(option);
-            button.setBounds(buttonX, yOffset + 40, 150, 30);
-            button.addActionListener(new ButtonClickListener(questionText, option));
-            treePanel.add(button);
-            buttons.add(button);
-            buttonX += 180;
-        }
-        
-        yOffset += 80;
-        
-        if (restartButton == null) {
-            restartButton = new JButton("Restart");
-            restartButton.setBounds(275, yOffset + 40, 150, 30);
-            restartButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    resetTree();
-                }
-            });
-            treePanel.add(restartButton);
-        }
-        
-        treePanel.setPreferredSize(new Dimension(700, yOffset + 100));
-        treePanel.revalidate();
-        treePanel.repaint();
-    }
+    const restartButton = document.getElementById("restart");
+    restartButton.addEventListener("click", restartQuiz);
     
-    private static void resetTree() {
-        treePanel.removeAll();
-        questionLabels.clear();
-        buttons.clear();
-        yOffset = 20;
-        addQuestion("Start", "Should AI be allowed to make medical decisions?");
-        treePanel.revalidate();
-        treePanel.repaint();
-    }
-    
-    static class ButtonClickListener implements ActionListener {
-        private String parentText;
-        private String optionText;
-        
-        public ButtonClickListener(String parentText, String optionText) {
-            this.parentText = parentText;
-            this.optionText = optionText;
-        }
-        
-        public void actionPerformed(ActionEvent e) {
-            if (!optionText.equals("End Path")) {
-                addQuestion(parentText, nextQuestion(optionText));
-            }
-        }
-    }
-    
-    private static String nextQuestion(String answer) {
-        switch (answer) {
-            case "Yes": return "Should AI replace doctors?";
-            case "No": return "Should AI assist in medical decisions?";
-            case "Depends": return "What factors should decide?";
-            case "Yes, it's more accurate": return "Who should oversee AI medical systems?";
-            case "No, doctors are needed": return "Should AI have any role in medicine?";
-            default: return "End of Path";
-        }
-    }
-}
+    renderQuestion("start");
+});
