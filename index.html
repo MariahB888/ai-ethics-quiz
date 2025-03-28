@@ -2,92 +2,120 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AIQuizTree {
+public class AIQuizTreeDiagram {
     private static JFrame frame;
     private static JPanel panel;
-    private static JLabel questionLabel;
-    private static JButton option1, option2, option3;
-    private static String currentQuestion;
-    
-    private static Map<String, String[]> questionTree = new HashMap<>();
-    
-    static {
-        questionTree.put("Start", new String[]{"Should AI be allowed to make medical decisions?", "Yes", "No", "Depends"});
-        questionTree.put("Yes", new String[]{"Should AI replace doctors?", "Yes, it's more accurate", "No, doctors are needed", "Only for diagnosis"});
-        questionTree.put("No", new String[]{"Should AI assist in medical decisions?", "Yes, as an advisor", "No, too risky", "Only in emergencies"});
-        questionTree.put("Depends", new String[]{"What factors should decide?", "Data accuracy", "Human oversight", "Case-by-case"});
-        
-        questionTree.put("Yes, it's more accurate", new String[]{"Who should oversee AI medical systems?", "Doctors", "Tech companies", "The government"});
-        questionTree.put("No, doctors are needed", new String[]{"Should AI have any role in medicine?", "Yes, but limited", "No role at all", "Only for research"});
-        
-        questionTree.put("Only for diagnosis", new String[]{"What about AI in mental health?", "Helpful for therapy", "Not reliable", "Only as a tool"});
-    }
+    private static JScrollPane scrollPane;
+    private static List<JLabel> questionLabels = new ArrayList<>();
+    private static List<JButton> buttons = new ArrayList<>();
+    private static JPanel treePanel;
+    private static JButton restartButton;
+    private static int yOffset = 20;
     
     public static void main(String[] args) {
         frame = new JFrame("AI Ethics Decision Tree");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 500);
+        frame.setSize(700, 600);
         
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(new Color(30, 60, 114));
         
-        questionLabel = new JLabel("Welcome to the AI Ethics Tree!", SwingConstants.CENTER);
-        questionLabel.setForeground(Color.WHITE);
-        questionLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        panel.add(questionLabel, BorderLayout.NORTH);
+        treePanel = new JPanel(null); 
+        treePanel.setBackground(new Color(240, 248, 255));
         
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));
-        buttonPanel.setBackground(new Color(30, 60, 114));
+        scrollPane = new JScrollPane(treePanel);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         
-        option1 = new JButton();
-        option2 = new JButton();
-        option3 = new JButton();
-        
-        buttonPanel.add(option1);
-        buttonPanel.add(option2);
-        buttonPanel.add(option3);
-        
-        panel.add(buttonPanel, BorderLayout.CENTER);
-        
-        option1.addActionListener(new ButtonClickListener());
-        option2.addActionListener(new ButtonClickListener());
-        option3.addActionListener(new ButtonClickListener());
-        
+        panel.add(scrollPane, BorderLayout.CENTER);
         frame.add(panel);
         frame.setVisible(true);
         
-        currentQuestion = "Start";
-        loadQuestion();
+        addQuestion("Start", "Should AI be allowed to make medical decisions?");
     }
     
-    private static void loadQuestion() {
-        if (questionTree.containsKey(currentQuestion)) {
-            String[] data = questionTree.get(currentQuestion);
-            questionLabel.setText(data[0]);
-            option1.setText(data[1]);
-            option2.setText(data[2]);
-            option3.setText(data[3]);
-            option1.setVisible(true);
-            option2.setVisible(true);
-            option3.setVisible(true);
+    private static void addQuestion(String parentText, String questionText) {
+        JLabel questionLabel = new JLabel(questionText);
+        questionLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        questionLabel.setBounds(50, yOffset, 600, 30);
+        treePanel.add(questionLabel);
+        questionLabels.add(questionLabel);
+        
+        String[] options;
+        if (questionText.equals("Should AI be allowed to make medical decisions?")) {
+            options = new String[]{"Yes", "No", "Depends"};
+        } else if (questionText.equals("Should AI replace doctors?")) {
+            options = new String[]{"Yes, it's more accurate", "No, doctors are needed", "Only for diagnosis"};
         } else {
-            questionLabel.setText("End of Path: " + currentQuestion);
-            option1.setVisible(false);
-            option2.setVisible(false);
-            option3.setVisible(false);
+            options = new String[]{"End Path"};
         }
+        
+        int buttonX = 50;
+        for (String option : options) {
+            JButton button = new JButton(option);
+            button.setBounds(buttonX, yOffset + 40, 150, 30);
+            button.addActionListener(new ButtonClickListener(questionText, option));
+            treePanel.add(button);
+            buttons.add(button);
+            buttonX += 180;
+        }
+        
+        yOffset += 80;
+        
+        if (restartButton == null) {
+            restartButton = new JButton("Restart");
+            restartButton.setBounds(275, yOffset + 40, 150, 30);
+            restartButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    resetTree();
+                }
+            });
+            treePanel.add(restartButton);
+        }
+        
+        treePanel.setPreferredSize(new Dimension(700, yOffset + 100));
+        treePanel.revalidate();
+        treePanel.repaint();
+    }
+    
+    private static void resetTree() {
+        treePanel.removeAll();
+        questionLabels.clear();
+        buttons.clear();
+        yOffset = 20;
+        addQuestion("Start", "Should AI be allowed to make medical decisions?");
+        treePanel.revalidate();
+        treePanel.repaint();
     }
     
     static class ButtonClickListener implements ActionListener {
+        private String parentText;
+        private String optionText;
+        
+        public ButtonClickListener(String parentText, String optionText) {
+            this.parentText = parentText;
+            this.optionText = optionText;
+        }
+        
         public void actionPerformed(ActionEvent e) {
-            JButton source = (JButton) e.getSource();
-            currentQuestion = source.getText();
-            loadQuestion();
+            if (!optionText.equals("End Path")) {
+                addQuestion(parentText, nextQuestion(optionText));
+            }
+        }
+    }
+    
+    private static String nextQuestion(String answer) {
+        switch (answer) {
+            case "Yes": return "Should AI replace doctors?";
+            case "No": return "Should AI assist in medical decisions?";
+            case "Depends": return "What factors should decide?";
+            case "Yes, it's more accurate": return "Who should oversee AI medical systems?";
+            case "No, doctors are needed": return "Should AI have any role in medicine?";
+            default: return "End of Path";
         }
     }
 }
