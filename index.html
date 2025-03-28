@@ -6,12 +6,20 @@
     <title>AI Ethics Quiz</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 50px;
+            background: linear-gradient(to bottom, #e3f2fd, #90caf9);
+            color: #0d47a1;
         }
         .question-container {
             display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 60%;
+            margin: auto;
         }
         .active {
             display: block;
@@ -23,14 +31,22 @@
         }
         .option {
             margin: 10px;
-            padding: 10px;
-            border: 1px solid black;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
             display: inline-block;
-            width: 200px;
+            width: 220px;
+            background-color: #1976d2;
+            color: white;
+            font-size: 16px;
+            transition: 0.3s;
         }
         .option:hover {
-            background-color: lightgray;
+            background-color: #1565c0;
+        }
+        h1, h2 {
+            font-family: 'Georgia', serif;
         }
     </style>
 </head>
