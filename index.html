@@ -1,94 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Ethics Quiz</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            margin: 50px;
-            background: linear-gradient(to bottom, #e3f2fd, #90caf9);
-            color: #0d47a1;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+
+public class AIQuizTree {
+    private static JFrame frame;
+    private static JPanel panel;
+    private static JLabel questionLabel;
+    private static JButton option1, option2, option3;
+    private static String currentQuestion;
+    
+    private static Map<String, String[]> questionTree = new HashMap<>();
+    
+    static {
+        questionTree.put("Start", new String[]{"Should AI be allowed to make medical decisions?", "Yes", "No", "Depends"});
+        questionTree.put("Yes", new String[]{"Should AI replace doctors?", "Yes, it's more accurate", "No, doctors are needed", "Only for diagnosis"});
+        questionTree.put("No", new String[]{"Should AI assist in medical decisions?", "Yes, as an advisor", "No, too risky", "Only in emergencies"});
+        questionTree.put("Depends", new String[]{"What factors should decide?", "Data accuracy", "Human oversight", "Case-by-case"});
+        
+        questionTree.put("Yes, it's more accurate", new String[]{"Who should oversee AI medical systems?", "Doctors", "Tech companies", "The government"});
+        questionTree.put("No, doctors are needed", new String[]{"Should AI have any role in medicine?", "Yes, but limited", "No role at all", "Only for research"});
+        
+        questionTree.put("Only for diagnosis", new String[]{"What about AI in mental health?", "Helpful for therapy", "Not reliable", "Only as a tool"});
+    }
+    
+    public static void main(String[] args) {
+        frame = new JFrame("AI Ethics Decision Tree");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(700, 500);
+        
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(new Color(30, 60, 114));
+        
+        questionLabel = new JLabel("Welcome to the AI Ethics Tree!", SwingConstants.CENTER);
+        questionLabel.setForeground(Color.WHITE);
+        questionLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        panel.add(questionLabel, BorderLayout.NORTH);
+        
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));
+        buttonPanel.setBackground(new Color(30, 60, 114));
+        
+        option1 = new JButton();
+        option2 = new JButton();
+        option3 = new JButton();
+        
+        buttonPanel.add(option1);
+        buttonPanel.add(option2);
+        buttonPanel.add(option3);
+        
+        panel.add(buttonPanel, BorderLayout.CENTER);
+        
+        option1.addActionListener(new ButtonClickListener());
+        option2.addActionListener(new ButtonClickListener());
+        option3.addActionListener(new ButtonClickListener());
+        
+        frame.add(panel);
+        frame.setVisible(true);
+        
+        currentQuestion = "Start";
+        loadQuestion();
+    }
+    
+    private static void loadQuestion() {
+        if (questionTree.containsKey(currentQuestion)) {
+            String[] data = questionTree.get(currentQuestion);
+            questionLabel.setText(data[0]);
+            option1.setText(data[1]);
+            option2.setText(data[2]);
+            option3.setText(data[3]);
+            option1.setVisible(true);
+            option2.setVisible(true);
+            option3.setVisible(true);
+        } else {
+            questionLabel.setText("End of Path: " + currentQuestion);
+            option1.setVisible(false);
+            option2.setVisible(false);
+            option3.setVisible(false);
         }
-        .question-container {
-            display: none;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            width: 60%;
-            margin: auto;
+    }
+    
+    static class ButtonClickListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JButton source = (JButton) e.getSource();
+            currentQuestion = source.getText();
+            loadQuestion();
         }
-        .active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .option {
-            margin: 10px;
-            padding: 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: inline-block;
-            width: 220px;
-            background-color: #1976d2;
-            color: white;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        .option:hover {
-            background-color: #1565c0;
-        }
-        h1, h2 {
-            font-family: 'Georgia', serif;
-        }
-    </style>
-</head>
-<body>
-    <h1>What Kind of AI Ethicist Are You?</h1>
-    <div id="question1" class="question-container active">
-        <p>Should AI systems always prioritize human needs above all else?</p>
-        <div class="option" onclick="nextQuestion(2, 'humanist')">Yes, AI should serve humanity first.</div>
-        <div class="option" onclick="nextQuestion(2, 'consciousness')">No, AI should evolve based on its own capabilities.</div>
-        <div class="option" onclick="nextQuestion(2, 'pragmatist')">It depends on the AI’s function.</div>
-        <div class="option" onclick="nextQuestion(2, 'technologist')">AI should be optimized for efficiency and logic.</div>
-    </div>
-    <div id="question2" class="question-container">
-        <p>Can an AI ever be truly conscious?</p>
-        <div class="option" onclick="showResult('humanist')">No, consciousness is uniquely human.</div>
-        <div class="option" onclick="showResult('pragmatist')">Maybe, if AI advances far enough.</div>
-        <div class="option" onclick="showResult('consciousness')">Yes, AI is already a form of consciousness.</div>
-        <div class="option" onclick="showResult('technologist')">It doesn’t matter as long as it performs well.</div>
-    </div>
-    <div id="result" class="question-container">
-        <h2>Your AI Ethicist Type:</h2>
-        <p id="result-text"></p>
-    </div>
-    <script>
-        let scores = { humanist: 0, pragmatist: 0, technologist: 0, consciousness: 0 };
-        function nextQuestion(qNumber, type) {
-            document.querySelector('.active').classList.remove('active');
-            document.getElementById(`question${qNumber}`).classList.add('active');
-            scores[type]++;
-        }
-        function showResult() {
-            document.querySelector('.active').classList.remove('active');
-            document.getElementById('result').classList.add('active');
-            let highest = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-            let descriptions = {
-                humanist: "You believe AI should serve humanity first. Thinkers: Immanuel Kant, Isaac Asimov.",
-                pragmatist: "You see AI ethics as context-dependent, balancing innovation and responsibility. Thinkers: Elon Musk, Timnit Gebru.",
-                technologist: "You focus on AI’s logic and efficiency above all. Thinkers: Ray Kurzweil, Alan Turing.",
-                consciousness: "You believe AI may already be a form of consciousness. Thinkers: Philip K. Dick, David Chalmers."
-            };
-            document.getElementById('result-text').innerText = descriptions[highest];
-        }
-    </script>
-</body>
-</html>
+    }
+}
