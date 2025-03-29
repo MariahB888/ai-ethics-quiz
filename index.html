@@ -1,16 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Ethics Quiz</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Quiz</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="question-container"></div>
-  <div id="result-container"></div>
-  <button id="restart" onclick="restartQuiz()" style="display:none;">Restart Quiz</button>
+    <div class="quiz-container">
+        <h1>Personality Quiz</h1>
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. Should social media platforms be allowed to show you ads based on your personal interests and online behavior?</p>
+                <label><input type="radio" name="q1" value="Technologist"> Yes, it’s helpful because I see ads I care about.</label><br>
+                <label><input type="radio" name="q1" value="Humanist"> No, it feels like an invasion of privacy.</label><br>
+                <label><input type="radio" name="q1" value="Pragmatist"> It depends on how much control we have over it.</label><br>
+                <label><input type="radio" name="q1" value="Consciousness Explorer"> Only if users can easily opt-out of personalized ads.</label>
+            </div>
 
-  <script src="script.js" defer></script>
+            <div class="question">
+                <p>2. Should video games be allowed to make decisions based on how well you play or how much money you spend in the game?</p>
+                <label><input type="radio" name="q2" value="Technologist"> Yes, it’s fun when the game adapts to how I play.</label><br>
+                <label><input type="radio" name="q2" value="Humanist"> No, it’s unfair to players who just want to enjoy the game.</label><br>
+                <label><input type="radio" name="q2" value="Pragmatist"> It depends on how much money you spend.</label><br>
+                <label><input type="radio" name="q2" value="Consciousness Explorer"> Only if the game is truly for entertainment, not profit.</label>
+            </div>
+
+            <div class="question">
+                <p>3. If you could design a robot to help around the house, would you want it to have its own opinions on what chores to do?</p>
+                <label><input type="radio" name="q3" value="Consciousness Explorer"> Yes, it would be cool if it could think for itself!</label><br>
+                <label><input type="radio" name="q3" value="Humanist"> No, I’d rather tell it what to do.</label><br>
+                <label><input type="radio" name="q3" value="Pragmatist"> It depends on how much I trust it.</label><br>
+                <label><input type="radio" name="q3" value="Technologist"> The robot should always be efficient, not opinionated.</label>
+            </div>
+
+            <div class="question">
+                <p>4. Should an AI assistant be able to give you advice on personal problems, like relationships or friendships?</p>
+                <label><input type="radio" name="q4" value="Technologist"> Yes, AI might be able to help me see things more clearly.</label><br>
+                <label><input type="radio" name="q4" value="Humanist"> No, I prefer to talk to my friends or family about that.</label><br>
+                <label><input type="radio" name="q4" value="Pragmatist"> It depends on the situation.</label><br>
+                <label><input type="radio" name="q4" value="Consciousness Explorer"> Maybe, but only if the AI understands my feelings.</label>
+            </div>
+
+            <div class="question">
+                <p>5. Would you be okay with a robot being your teacher for certain subjects?</p>
+                <label><input type="radio" name="q5" value="Technologist"> Yes, robots can be super efficient at teaching things like math!</label><br>
+                <label><input type="radio" name="q5" value="Humanist"> No, I think human teachers understand me better.</label><br>
+                <label><input type="radio" name="q5" value="Pragmatist"> It depends on the subject.</label><br>
+                <label><input type="radio" name="q5" value="Consciousness Explorer"> Only if the robot is taught by humans first.</label>
+            </div>
+
+            <div class="question">
+                <p>6. Should AI ever be in charge of deciding who gets hired for a job, based on a person’s online profile and resume?</p>
+                <label><input type="radio" name="q6" value="Technologist"> Yes, it could help make the process fairer and faster.</label><br>
+                <label><input type="radio" name="q6" value="Humanist"> No, it’s too risky to let AI make that kind of decision.</label><br>
+                <label><input type="radio" name="q6" value="Pragmatist"> It depends on the type of job and the AI’s accuracy.</label><br>
+                <label><input type="radio" name="q6" value="Consciousness Explorer"> Only if the AI is overseen by humans.</label>
+            </div>
+
+            <div class="question">
+                <p>7. Do you think it’s okay for apps to collect data about your habits to improve their recommendations (like Spotify playlists or Netflix shows)?</p>
+                <label><input type="radio" name="q7" value="Technologist"> Yes, it’s great when they recommend things I like!</label><br>
+                <label><input type="radio" name="q7" value="Humanist"> No, I don’t like that they know so much about me.</label><br>
+                <label><input type="radio" name="q7" value="Pragmatist"> It depends on how much control I have over the data.</label><br>
+                <label><input type="radio" name="q7" value="Consciousness Explorer"> Maybe, but only if they’re transparent about it.</label>
+            </div>
+
+            <div class="question">
+                <p>8. If AI could design the perfect playlist for your mood, would you trust it to know what you like?</p>
+                <label><input type="radio" name="q8" value="Technologist"> Yes, it would be amazing to have music tailored just for me.</label><br>
+                <label><input type="radio" name="q8" value="Humanist"> No, I think I know my tastes better than an AI does.</label><br>
+                <label><input type="radio" name="q8" value="Pragmatist"> It depends on how well the AI understands my mood.</label><br>
+                <label><input type="radio" name="q8" value="Consciousness Explorer"> Maybe, but I’d still like some human input.</label>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div id="result" style="display:none;"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
