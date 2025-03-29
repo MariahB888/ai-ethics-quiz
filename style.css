@@ -1,5 +1,5 @@
 body {
-    background-color: #ffffff; /* Summit White */
+    background-color: #003352; /* Kerby Blue */
     font-family: "Helvetica Neue", sans-serif;
     color: #007fb5; /* Lincoln Blue */
     text-align: center;
@@ -47,10 +47,4 @@ button:hover {
     font-size: 20px;
     margin-top: 20px;
     color: #007fb5; /* Lincoln Blue */
-}
-
-
-#result {
-    font-size: 20px;
-    margin-top: 20px;
 }
