@@ -7,6 +7,9 @@ html, body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333333;
     background-color: #f4f8fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 * {
@@ -15,7 +18,7 @@ html, body {
 
 #quiz-container {
     max-width: 600px;
-    margin: 0 auto;
+    width: 100%;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
@@ -27,6 +30,7 @@ h1 {
     font-size: 24px;
     margin-bottom: 20px;
     color: #004d79;
+    text-align: center;
 }
 
 .question {
@@ -53,6 +57,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%;
 }
 
 button:hover {
@@ -67,4 +72,11 @@ button:hover {
 #result-text {
     font-size: 18px;
     color: #333;
+}
+
+#description {
+    margin-top: 30px;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
 }
