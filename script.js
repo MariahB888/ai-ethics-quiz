@@ -1,40 +1,30 @@
-document.getElementById('quiz-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+document.getElementById('quiz-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    let resultText = '';
-    let technologist = 0;
-    let humanist = 0;
-    let pragmatist = 0;
-    let consciousnessExplorer = 0;
+    // Initialize a score for each personality type
+    const scores = {
+        Technologist: 0,
+        Humanist: 0,
+        Pragmatist: 0,
+        ConsciousnessExplorer: 0
+    };
 
-    // Check answers for each question
-    const answers = document.querySelectorAll('input[type="radio"]:checked');
-    
-    answers.forEach(answer => {
-        if (answer.value === "Technologist") {
-            technologist++;
-        } else if (answer.value === "Humanist") {
-            humanist++;
-        } else if (answer.value === "Pragmatist") {
-            pragmatist++;
-        } else if (answer.value === "Consciousness Explorer") {
-            consciousnessExplorer++;
+    // Loop through each question and update the score based on selected answer
+    const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'];
+    questions.forEach(q => {
+        const selectedAnswer = document.querySelector(`input[name="${q}"]:checked`);
+        if (selectedAnswer) {
+            scores[selectedAnswer.value]++;
         }
     });
 
-    // Calculate the result
-    if (technologist > humanist && technologist > pragmatist && technologist > consciousnessExplorer) {
-        resultText = "You are a Technologist!";
-    } else if (humanist > technologist && humanist > pragmatist && humanist > consciousnessExplorer) {
-        resultText = "You are a Humanist!";
-    } else if (pragmatist > technologist && pragmatist > humanist && pragmatist > consciousnessExplorer) {
-        resultText = "You are a Pragmatist!";
-    } else if (consciousnessExplorer > technologist && consciousnessExplorer > humanist && consciousnessExplorer > pragmatist) {
-        resultText = "You are a Consciousness Explorer!";
-    }
+    // Determine the highest score and display the result
+    const result = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b);
+    const resultMessage = `Your personality type is: ${result[0]}`;
 
-    // Show the result
-    document.getElementById('quiz-form').style.display = 'none';
-    document.getElementById('result').style.display = 'block';
-    document.getElementById('result-text').textContent = resultText;
+    // Display the result message
+    const resultElement = document.getElementById('result');
+    resultElement.style.display = 'block';
+    resultElement.innerHTML = `<h2>${resultMessage}</h2>`;
 });
+
