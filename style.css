@@ -1,35 +1,38 @@
 body {
-    background-color: #003352; /* Kerby Blue */
+    background-color: #ffffff; /* Summit White */
     font-family: "Helvetica Neue", sans-serif;
-    color: white;
+    color: #007fb5; /* Lincoln Blue */
     text-align: center;
     padding: 20px;
 }
 
 .quiz-container {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #ffffff; /* Summit White */
     padding: 20px;
     border-radius: 10px;
     display: inline-block;
     max-width: 600px;
     width: 100%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     font-size: 24px;
+    color: #007fb5; /* Lincoln Blue */
 }
 
 .question {
     font-size: 18px;
     margin-bottom: 15px;
     text-align: left;
+    color: #007fb5; /* Lincoln Blue */
 }
 
 button {
     font-size: 18px;
     padding: 10px 15px;
-    background-color: white;
-    color: #003352;
+    background-color: #00b1ff; /* Focus Blue */
+    color: #ffffff; /* Summit White */
     border: none;
     cursor: pointer;
     border-radius: 5px;
@@ -37,8 +40,15 @@ button {
 }
 
 button:hover {
-    background-color: lightgray;
+    background-color: #a7a9ac; /* Historic Silver */
 }
+
+#result {
+    font-size: 20px;
+    margin-top: 20px;
+    color: #007fb5; /* Lincoln Blue */
+}
+
 
 #result {
     font-size: 20px;
