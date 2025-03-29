@@ -10,6 +10,7 @@
     <div class="quiz-container">
         <h1>Personality Quiz</h1>
         <form id="quiz-form">
+            <!-- Questions (same as before) -->
             <div class="question">
                 <p>1. Should social media platforms be allowed to show you ads based on your personal interests and online behavior?</p>
                 <label><input type="radio" name="q1" value="Technologist"> Yes, it’s helpful because I see ads I care about.</label><br>
@@ -26,6 +27,7 @@
                 <label><input type="radio" name="q2" value="Consciousness Explorer"> Only if the game is truly for entertainment, not profit.</label>
             </div>
 
+     
             <div class="question">
                 <p>3. If you could design a robot to help around the house, would you want it to have its own opinions on what chores to do?</p>
                 <label><input type="radio" name="q3" value="Consciousness Explorer"> Yes, it would be cool if it could think for itself!</label><br>
@@ -75,11 +77,16 @@
             </div>
 
             <button type="submit">Submit</button>
+            <button type="button" id="reset-button">Reset</button>
         </form>
 
-        <div id="result" style="display:none;"></div>
+        <div id="result" style="display:none;">
+            <h2>Your personality type is: <span id="result-type"></span></h2>
+            <p id="result-description"></p>
+        </div>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
+
