@@ -1,49 +1,46 @@
 body {
+    background-color: #003352; /* Kerby Blue */
     font-family: "Helvetica Neue", sans-serif;
-    background-color: #e0f7ff;
-    color: #003366;
+    color: white;
     text-align: center;
     padding: 20px;
 }
 
 .quiz-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    max-width: 600px;
+    width: 100%;
 }
 
 h1 {
     font-size: 24px;
 }
 
-p {
+.question {
     font-size: 18px;
-}
-
-label {
-    font-size: 16px;
-    display: block;
-    margin: 5px 0;
+    margin-bottom: 15px;
+    text-align: left;
 }
 
 button {
     font-size: 18px;
-    background-color: #007acc;
-    color: white;
     padding: 10px 15px;
+    background-color: white;
+    color: #003352;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 button:hover {
-    background-color: #005faa;
+    background-color: lightgray;
 }
 
-#result-text {
-    font-size: 18px;
-    color: #333;
+#result {
+    font-size: 20px;
+    margin-top: 20px;
 }
