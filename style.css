@@ -24,11 +24,12 @@ h1 {
     color: #007fb5; /* Lincoln Blue */
 }
 
-.question {
+.question p {
     font-size: 18px;
     margin-bottom: 15px;
     text-align: left;
     color: #007fb5; /* Lincoln Blue */
+    font-weight: bold; /* Make questions bold */
 }
 
 button {
