@@ -1,59 +1,57 @@
-// Function to request full screen
-function openFullScreen() {
-    const element = document.documentElement; // Get the HTML element (document)
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // IE/Edge
-        element.msRequestFullscreen();
-    }
-}
+function submitQuiz() {
+    // Get all the answers from the quiz form
+    const form = document.getElementById("quiz-form");
+    const formData = new FormData(form);
 
-// Trigger full-screen mode on button click
-document.getElementById('fullscreen-btn').addEventListener('click', function() {
-    openFullScreen();
-});
-
-// Handle form submission
-document.getElementById('quiz-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    // Initialize a score for each personality type
-    const scores = {
+    // Initialize counters for each personality type
+    let scores = {
         Technologist: 0,
         Humanist: 0,
         Pragmatist: 0,
         ConsciousnessExplorer: 0
     };
 
-    // Loop through each question and update the score based on selected answer
-    const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'];
-    questions.forEach(q => {
-        const selectedAnswer = document.querySelector(`input[name="${q}"]:checked`);
-        if (selectedAnswer) {
-            scores[selectedAnswer.value]++;
+    // Loop through each question and add points based on the selected answer
+    formData.forEach((value, key) => {
+        if (value === "Technologist") {
+            scores.Technologist++;
+        } else if (value === "Humanist") {
+            scores.Humanist++;
+        } else if (value === "Pragmatist") {
+            scores.Pragmatist++;
+        } else if (value === "Consciousness Explorer") {
+            scores.ConsciousnessExplorer++;
         }
     });
 
-    // Determine the highest score and display the result
-    const result = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b);
-    const resultMessage = `Your personality type is: ${result[0]}`;
+    // Determine which personality type scored the highest
+    let highestScore = 0;
+    let personalityType = "";
 
-    // Display the result message
-    const resultElement = document.getElementById('result');
-    resultElement.style.display = 'block';
-    resultElement.innerHTML = `<h2>${resultMessage}</h2>`;
-});
+    for (let type in scores) {
+        if (scores[type] > highestScore) {
+            highestScore = scores[type];
+            personalityType = type;
+        }
+    }
 
-// Reset button functionality
-document.getElementById('reset-btn').addEventListener('click', function() {
-    const form = document.getElementById('quiz-form');
-    form.reset(); // Reset the form to clear selected answers
+    // Display the result
+    const resultContainer = document.getElementById("result");
+    const resultType = document.getElementById("result-type");
+    const resultDescription = document.getElementById("result-description");
 
-    // Hide the result message after reset
-    const resultElement = document.getElementById('result');
-    resultElement.style.display = 'none'; // Hide the result message
-});
+    resultContainer.style.display = "block";
+    resultType.textContent = personalityType;
+
+    // Display different descriptions based on the personality type
+    if (personalityType === "Technologist") {
+        resultDescription.textContent = "You embrace technology and see its potential to enhance efficiency and innovation. You are often excited by the possibilities of AI and its role in our daily lives.";
+    } else if (personalityType === "Humanist") {
+        resultDescription.textContent = "You value human connections and personal experiences. You believe in the importance of human intuition and empathy, especially when it comes to decision-making and relationships.";
+    } else if (personalityType === "Pragmatist") {
+        resultDescription.textContent = "You prefer practical solutions and a balanced approach. You are focused on what works and believe in adaptability, knowing when to use technology and when to rely on human touch.";
+    } else if (personalityType === "Consciousness Explorer") {
+        resultDescription.textContent = "You are fascinated by the concept of consciousness and how it relates to both humans and AI. You believe in exploring the deeper, philosophical implications of technology and its impact on our lives.";
+    }
+}
+
