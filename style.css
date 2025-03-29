@@ -1,54 +1,57 @@
-/* Add the Open Sans font family */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+/* Import Open Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
 
+/* Apply the Open Sans font and other basic styles */
 body {
     background-color: #003352; /* Kerby Blue */
     font-family: 'Open Sans', sans-serif;
-    color: #007fb5; /* Lincoln Blue */
-    text-align: center;
-    padding: 20px;
+    color: #ffffff; /* Summit White */
+    font-size: 18px; /* Adjust the font size for better readability */
 }
 
-.quiz-container {
+h1, h2, h3 {
+    font-weight: bold;
+}
+
+/* Apply black font color to the answer options */
+input[type="radio"] + label {
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Quiz container styles */
+#quiz-container {
     background-color: #ffffff; /* Summit White */
     padding: 20px;
     border-radius: 10px;
-    display: inline-block;
-    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    font-size: 24px;
-    color: #007fb5; /* Lincoln Blue */
-}
-
-.question p {
-    font-size: 18px;
-    margin-bottom: 15px;
-    text-align: left;
-    color: #007fb5; /* Lincoln Blue */
-    font-weight: bold; /* Make questions bold */
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 button {
-    font-size: 18px;
-    padding: 10px 15px;
-    background-color: #00b1ff; /* Focus Blue */
-    color: #ffffff; /* Summit White */
+    background-color: #007fb5; /* Lincoln Blue */
+    color: white;
     border: none;
-    cursor: pointer;
+    padding: 10px 20px;
     border-radius: 5px;
-    margin-top: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 button:hover {
-    background-color: #a7a9ac; /* Historic Silver */
+    background-color: #00b1ff; /* Focus Blue */
 }
 
+/* Styling for result message */
 #result {
-    font-size: 20px;
-    margin-top: 20px;
-    color: #007fb5; /* Lincoln Blue */
+    background-color: #a7a9ac; /* Historic Silver */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    text-align: center;
 }
+
