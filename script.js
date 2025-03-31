@@ -31,9 +31,9 @@ function submitQuiz() {
     for (let type in scores) {
         if (scores[type] > highestScore) {
             highestScore = scores[type];
-            personalityType = type;
-        }
+            personalityType = type.replace("ConsciousnessExplorer", "Consciousness Explorer");
     }
+}
 
     // Display the result
     const resultContainer = document.getElementById("result");
