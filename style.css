@@ -29,8 +29,6 @@ h1 {
     margin-bottom: 15px;
     text-align: left;
     color: #007fb5; /* Lincoln Blue */
-
-    .question {
     transition: transform 0.3s ease-in-out, opacity 0.3s ease;
 }
 
@@ -42,7 +40,6 @@ h1 {
 .question.visible {
     opacity: 1;
     transform: translateY(0);
-
 }
 
 button {
@@ -54,10 +51,12 @@ button {
     cursor: pointer;
     border-radius: 5px;
     margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
     background-color: #a7a9ac; /* Historic Silver */
+    transform: scale(1.05);
 }
 
 #result {
@@ -65,6 +64,7 @@ button:hover {
     margin-top: 20px;
     color: #007fb5; /* Lincoln Blue */
 }
+
 footer {
     text-align: center;
     font-size: 14px;
@@ -86,3 +86,4 @@ footer p {
     font-style: italic;
     color: #555;
 }
+
