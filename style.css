@@ -51,3 +51,24 @@ button:hover {
     margin-top: 20px;
     color: #007fb5; /* Lincoln Blue */
 }
+footer {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #ddd;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+.collaboration {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+    color: #555;
+}
