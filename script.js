@@ -45,13 +45,13 @@ function submitQuiz() {
 
     // Display different descriptions based on the personality type
     if (personalityType === "Technologist") {
-        resultDescription.textContent = "You embrace technology and see its potential to enhance efficiency and innovation. You are often excited by the possibilities of AI and its role in our daily lives.";
+        resultDescription.textContent = "You embrace technology and see its potential to enhance efficiency and innovation. You are often excited by the possibilities of AI and its role in our daily lives. You trust data-driven solutions and believe in leveraging technology to solve complex problems.";
     } else if (personalityType === "Humanist") {
-        resultDescription.textContent = "You value human connections and personal experiences. You believe in the importance of human intuition and empathy, especially when it comes to decision-making and relationships.";
+        resultDescription.textContent = "You value human connections and personal experiences. You prioritize ethics, empathy, and intuition over pure efficiency. You believe that human judgment, creativity, and emotions are irreplaceable, and you advocate for responsible AI use that centers on human well-being.";
     } else if (personalityType === "Pragmatist") {
-        resultDescription.textContent = "You prefer practical solutions and a balanced approach. You are focused on what works and believe in adaptability, knowing when to use technology and when to rely on human touch.";
+        resultDescription.textContent = "You evaluate AI on a case-by-case basis, supporting its use when it improves efficiency but recognizing its limits in areas requiring human judgment. You seek practical solutions rather than ideological stances on technology, carefully weighing its benefits and risks before embracing new advancements.";
     } else if (personalityType === "Consciousness Explorer") {
-        resultDescription.textContent = "You are fascinated by the concept of consciousness and how it relates to both humans and AI. You believe in exploring the deeper, philosophical implications of technology and its impact on our lives.";
+        resultDescription.textContent = "You are curious about AI’s deeper implications—whether ethical, philosophical, or consciousness-related. You question what it means to be intelligent and sentient, exploring the boundaries between human and artificial intelligence. You are open to new perspectives on technology’s role in shaping our understanding of the mind and reality.";
     }
 }
 
